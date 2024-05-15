@@ -43,10 +43,10 @@ jib {
         image = "openjdk:17-alpine"
     }
     to {
-        image = "capstone/api"
+        image = "ksw990327/api"
         tags = ["latest"]
         auth {
-            username = System.getenv('DOCKERHUB_USERNAME') ?: ''
+            username = 'ksw990327'
             password = System.getenv('DOCKERHUB_PASSWORD') ?: ''
         }
     }

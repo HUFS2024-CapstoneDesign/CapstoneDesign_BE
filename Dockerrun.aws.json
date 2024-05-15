@@ -1,7 +1,7 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "capstone/api:latest",
+    "Name": "ksw990327/api:latest",
     "Update": "true"
   },
   "Ports": [
