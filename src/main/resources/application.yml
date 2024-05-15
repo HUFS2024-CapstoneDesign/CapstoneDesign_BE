@@ -1,0 +1,35 @@
+## Default profile
+spring:
+  application:
+    name: CapStone
+  profiles:
+    active: dev
+springdoc:
+  swagger-ui:
+    tags-sorter: alpha
+    operations-sorter: method
+    displayRequestDuration: true
+
+---
+# Local Profile
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  # H2
+  h2:
+    console:
+      enabled: true
+      path: ${H2_PATH}
+      settings:
+        web-allow-others: true
+  datasource:
+    url: ${H2_URL}
+    driver-class-name: org.h2.Driver
+    username: ${H2_USERNAME}
+    password: ${H2_PASSWORD}
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
