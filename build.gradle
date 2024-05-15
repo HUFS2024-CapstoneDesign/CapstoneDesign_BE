@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.2.5'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'com.diffplug.spotless' version '6.23.3' // spotless
+    id 'com.google.cloud.tools.jib' version '3.4.1' // jib
 }
 
 group = 'com.example'
@@ -37,6 +38,25 @@ spotless {
     }
 }
 
+jib {
+    from {
+        image = "openjdk:17-alpine"
+    }
+    to {
+        image = "artstoryage/api"
+        tags = ["latest"]
+        auth {
+            username = 'artstoryage'
+            password = System.getenv('DOCKERHUB_PASSWORD') ?: ''
+        }
+    }
+    container {
+        jvmFlags = ["-Xms128m", "-Xmx128m", "-Dspring.profiles.active=dev", "-Dfile.encoding=UTF-8"]
+        ports = ["8080"]
+        allowInsecureRegistries = true
+    }
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -56,4 +76,17 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.named('compileJava') {
+    dependsOn 'spotlessApply'
+    dependsOn 'addGitHooks'
+}
+
+tasks.register('addGitHooks', Copy) {
+    from './script/pre-commit'
+    into './.git/hooks'
+    filePermissions {
+        unix('r-xr-xr-x')
+    }
 }
