@@ -30,4 +30,13 @@ public class MemberConverter {
         .email(member.getEmail())
         .build();
   }
+
+  public static TokenResponse toLoginMemberResponse(
+      Long memberId, String accessToken, String refreshToken) {
+    return TokenResponse.builder()
+        .memberId(memberId)
+        .accessToken(accessToken)
+        .refreshToken(refreshToken)
+        .build();
+  }
 }

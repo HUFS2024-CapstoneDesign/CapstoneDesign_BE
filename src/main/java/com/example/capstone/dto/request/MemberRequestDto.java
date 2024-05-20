@@ -11,4 +11,10 @@ public class MemberRequestDto {
     String password;
     String address;
   }
+
+  @Getter
+  public static class LoginMemberRequest {
+    String email;
+    String password;
+  }
 }
