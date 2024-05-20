@@ -1,9 +1,9 @@
 package com.example.capstone.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.*;
 
 import com.example.capstone.domain.Enums.Gender;
 
@@ -29,4 +29,11 @@ public class Pet {
   private String species;
 
   private String petImage;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "member_id")
+  private Member member;
+
+  @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
+  private List<Diagnosis> diagnosisList = new ArrayList<>();
 }

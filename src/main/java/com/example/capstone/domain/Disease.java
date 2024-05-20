@@ -1,9 +1,9 @@
 package com.example.capstone.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.*;
 
 import lombok.*;
 
@@ -29,4 +29,7 @@ public class Disease {
   private String symptom3;
 
   private String causes;
+
+  @OneToMany(mappedBy = "disease", cascade = CascadeType.ALL)
+  private List<Diagnosis> diagnosisList = new ArrayList<>();
 }

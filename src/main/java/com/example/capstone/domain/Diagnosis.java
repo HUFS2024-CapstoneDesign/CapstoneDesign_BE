@@ -1,9 +1,6 @@
 package com.example.capstone.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import lombok.*;
 
@@ -19,4 +16,12 @@ public class Diagnosis {
   private Long id;
 
   private Integer medicalExpense;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "pet_id")
+  private Pet pet;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "disease_id")
+  private Disease disease;
 }

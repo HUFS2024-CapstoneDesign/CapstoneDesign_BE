@@ -1,9 +1,9 @@
 package com.example.capstone.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.*;
 
 import com.example.capstone.domain.Enums.SocialType;
 
@@ -31,4 +31,7 @@ public class Member {
   private String address;
 
   private String profileImage;
+
+  @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+  private List<Pet> petList = new ArrayList<>();
 }
