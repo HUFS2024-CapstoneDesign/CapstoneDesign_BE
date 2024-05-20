@@ -35,4 +35,8 @@ public class Member {
 
   @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
   private List<Pet> petList = new ArrayList<>();
+
+  public void setSocialType(SocialType socialType) {
+    this.socialType = socialType;
+  }
 }
