@@ -1,4 +1,4 @@
-package com.example.capstone.domain;
+package com.example.capstone.domain.member;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import jakarta.persistence.*;
 
 import com.example.capstone.domain.Enums.SocialType;
+import com.example.capstone.domain.Pet;
 
 import lombok.*;
 
@@ -22,7 +23,7 @@ public class Member {
 
   private String email;
 
-  private String password;
+  @Embedded private Password password;
 
   private String nickName;
 
