@@ -6,6 +6,7 @@ import java.util.List;
 import jakarta.persistence.*;
 
 import com.example.capstone.domain.Enums.Gender;
+import com.example.capstone.domain.member.Member;
 
 import lombok.*;
 
