@@ -31,10 +31,10 @@ public class SecurityConfig {
 
   private final String[] allowedUrls = {
     "/h2-console/**",
-    "/api/v1/members/signup",
-    "/api/v1/members/login",
-    "/api/v1/members/kakao",
-    "/api/v1/members/reissue"
+    "api/v1/members/signup",
+    "api/v1/members/login",
+    "api/v1/members/kakao",
+    "api/v1/members/reissue"
   };
 
   @Bean
