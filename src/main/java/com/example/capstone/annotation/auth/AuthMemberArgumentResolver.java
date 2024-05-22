@@ -10,10 +10,10 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import com.example.capstone.Service.MemberQueryService;
 import com.example.capstone.domain.member.Member;
 import com.example.capstone.exception.GlobalErrorCode;
 import com.example.capstone.exception.custom.MemberException;
+import com.example.capstone.service.MemberQueryService;
 
 import lombok.RequiredArgsConstructor;
 

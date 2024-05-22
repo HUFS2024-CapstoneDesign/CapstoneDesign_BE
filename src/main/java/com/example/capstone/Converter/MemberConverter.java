@@ -7,6 +7,8 @@ import com.example.capstone.domain.member.Member;
 import com.example.capstone.domain.member.Password;
 import com.example.capstone.dto.request.MemberRequestDto.*;
 import com.example.capstone.dto.response.MemberResponseDto.*;
+import com.example.capstone.oAuth.AuthToken;
+import com.example.capstone.oAuth.OAuthInfoResponse;
 
 @Component
 public class MemberConverter {
@@ -37,6 +39,21 @@ public class MemberConverter {
         .memberId(memberId)
         .accessToken(accessToken)
         .refreshToken(refreshToken)
+        .build();
+  }
+
+  public static TokenResponse toKakaoLogin(AuthToken authToken) {
+    return TokenResponse.builder()
+        .accessToken(authToken.getAccessToken())
+        .refreshToken(authToken.getRefreshToken())
+        .build();
+  }
+
+  public static SignUpMemberRequest toMemberKakaoRequest(
+      OAuthInfoResponse oAuthInfoResponse, String password) {
+    return SignUpMemberRequest.builder()
+        .nickName(oAuthInfoResponse.getNickname())
+        .password(password)
         .build();
   }
 }

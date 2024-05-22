@@ -27,7 +27,7 @@ public class Member {
 
   private String nickName;
 
-  private SocialType socialType;
+  @Builder.Default private SocialType socialType = SocialType.COMMON;
 
   private String address;
 
