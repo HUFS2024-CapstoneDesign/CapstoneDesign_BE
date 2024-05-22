@@ -1,10 +1,12 @@
 package com.example.capstone.service.Impl;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,10 @@ public class MemberCommandCommandServiceImpl implements MemberCommandService {
   private final MemberQueryService memberQueryService;
   private final RequestOAuthInfoService requestOAuthInfoService;
   private final AuthTokenGenerator authTokenGenerator;
+  private final RedisTemplate<String, String> redisTemplate;
+
+  @Value("${jwt.refresh-token-validity}")
+  private Long refreshTokenValidityMilliseconds;
 
   @Value("${spring.virtual.password}")
   private String password;
@@ -76,5 +82,34 @@ public class MemberCommandCommandServiceImpl implements MemberCommandService {
     OAuthInfoResponse oAuthInfoResponse = requestOAuthInfoService.request(params);
     Long userId = createKakaoMember(oAuthInfoResponse).getId();
     return authTokenGenerator.generate(userId);
+  }
+
+  @Override
+  public TokenResponse reissue(ReissueRequest request) {
+    String refreshToken = request.getRefreshToken();
+
+    Long memberId = jwtAuthProvider.parseRefreshToken(refreshToken);
+
+    if (!refreshToken.equals(redisTemplate.opsForValue().get(memberId.toString()))) {
+      throw new MemberException(GlobalErrorCode.INVALID_TOKEN);
+    }
+
+    Member member =
+        memberRepository
+            .findById(memberId)
+            .orElseThrow(() -> new MemberException(GlobalErrorCode.MEMBER_NOT_FOUND));
+
+    String newAccessToken = jwtAuthProvider.generateAccessToken(member.getId());
+    String newRefreshToken = jwtAuthProvider.generateRefreshToken(member.getId());
+
+    redisTemplate
+        .opsForValue()
+        .set(
+            member.getId().toString(),
+            newRefreshToken,
+            refreshTokenValidityMilliseconds,
+            TimeUnit.MILLISECONDS);
+
+    return MemberConverter.toReissueResponse(memberId, newAccessToken, newRefreshToken);
   }
 }
