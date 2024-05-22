@@ -42,6 +42,11 @@ spring:
         api: https://kapi.kakao.com
   virtual:
     password: ${KAKAO_PASSWORD}
+  # Redis
+  data:
+    redis:
+      host: localhost
+      port: 6379
 
 ---
 # Dev Profile
@@ -75,6 +80,10 @@ spring:
         api: https://kapi.kakao.com
   virtual:
     password: ${SOCIAL_PASSWORD}
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
 
 ---
 #jwt

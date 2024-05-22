@@ -57,4 +57,11 @@ public class MemberController {
     return BaseResponse.onSuccess(
         MemberConverter.toKakaoLogin(memberCommandService.loginKakao(params)));
   }
+
+  @Operation(summary = "reissue API", description = "토큰을 재발급합니다.")
+  @ApiResponse(responseCode = "200", description = "성공")
+  @PostMapping("/reissue")
+  public BaseResponse<TokenResponse> reissue(@RequestBody ReissueRequest request) {
+    return BaseResponse.onSuccess(memberCommandService.reissue(request));
+  }
 }

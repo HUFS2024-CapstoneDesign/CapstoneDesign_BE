@@ -15,4 +15,6 @@ public interface MemberCommandService {
   Member createKakaoMember(OAuthInfoResponse response);
 
   AuthToken loginKakao(OAuthLoginParams params);
+
+  TokenResponse reissue(ReissueRequest request);
 }
