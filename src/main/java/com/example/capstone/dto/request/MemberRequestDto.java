@@ -24,4 +24,9 @@ public class MemberRequestDto {
   public static class ReissueRequest {
     String refreshToken;
   }
+
+  @Getter
+  public static class FindPasswordByEmailRequest {
+    String email;
+  }
 }

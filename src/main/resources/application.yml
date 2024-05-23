@@ -47,6 +47,10 @@ spring:
     redis:
       host: localhost
       port: 6379
+  # 네이버 메일
+  email:
+    username: ${EMAIL_ID}
+    password: ${EMAIL_PASSWORD}
 
 ---
 # Dev Profile
@@ -84,6 +88,10 @@ spring:
     redis:
       host: ${REDIS_HOST}
       port: ${REDIS_PORT}
+  # 네이버 메일
+  email:
+    username: ${EMAIL_ID}
+    password: ${EMAIL_PASSWORD}
 
 ---
 #jwt

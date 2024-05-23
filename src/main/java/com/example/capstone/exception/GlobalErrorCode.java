@@ -18,7 +18,8 @@ public enum GlobalErrorCode {
   AUTHENTICATION_REQUIRED(HttpStatus.UNAUTHORIZED, "인증이 필요합니다."),
   MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "등록된 사용자가 없습니다."),
   PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
-  INVALID_TOKEN(HttpStatus.BAD_REQUEST, "잘못된 토큰입니다.");
+  INVALID_TOKEN(HttpStatus.BAD_REQUEST, "잘못된 토큰입니다."),
+  FAIL_TO_SEND(HttpStatus.CONFLICT, "메일 보내기를 실패하였습니다.");
 
   private final HttpStatus httpStatus;
   private final String message;

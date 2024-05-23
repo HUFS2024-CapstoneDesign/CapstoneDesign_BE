@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.mail.MailException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,8 @@ import com.example.capstone.repository.MemberRepository;
 import com.example.capstone.security.provider.JwtAuthProvider;
 import com.example.capstone.service.MemberCommandService;
 import com.example.capstone.service.MemberQueryService;
+import com.example.capstone.util.MailUtil;
+import com.example.capstone.util.RedisUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,6 +40,8 @@ public class MemberCommandCommandServiceImpl implements MemberCommandService {
   private final RequestOAuthInfoService requestOAuthInfoService;
   private final AuthTokenGenerator authTokenGenerator;
   private final RedisTemplate<String, String> redisTemplate;
+  private final RedisUtil redisUtil;
+  private final MailUtil mailUtil;
 
   @Value("${jwt.refresh-token-validity}")
   private Long refreshTokenValidityMilliseconds;
@@ -111,5 +116,20 @@ public class MemberCommandCommandServiceImpl implements MemberCommandService {
             TimeUnit.MILLISECONDS);
 
     return MemberConverter.toReissueResponse(memberId, newAccessToken, newRefreshToken);
+  }
+
+  @Override
+  public Boolean sendEmail(FindPasswordByEmailRequest request) throws Exception {
+    if (redisUtil.hasKey(request.getEmail())) {
+      redisUtil.deleteEmailCertification(request.getEmail());
+    }
+
+    try {
+      mailUtil.sendEmail(request.getEmail());
+      return true;
+    } catch (MailException e) {
+      e.printStackTrace();
+      throw new MemberException(GlobalErrorCode.MEMBER_NOT_FOUND);
+    }
   }
 }

@@ -35,7 +35,8 @@ public class SecurityConfig {
     "api/v1/members/login",
     "api/v1/members/kakao",
     "api/v1/members/reissue",
-    "api/v1/members/find-id"
+    "api/v1/members/find-id",
+    "api/v1/members/find-password"
   };
 
   @Bean
