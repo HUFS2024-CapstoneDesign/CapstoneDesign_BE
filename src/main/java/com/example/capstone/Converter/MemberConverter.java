@@ -69,4 +69,11 @@ public class MemberConverter {
   public static FindEmailByNickNameResponse toFindEmailByNickNameResponse(Member member) {
     return FindEmailByNickNameResponse.builder().email(member.getEmail()).build();
   }
+
+  public static ChangePasswordResponse toChangePasswordResponse(Member member) {
+    return ChangePasswordResponse.builder()
+        .memberId(member.getId())
+        .email(member.getEmail())
+        .build();
+  }
 }

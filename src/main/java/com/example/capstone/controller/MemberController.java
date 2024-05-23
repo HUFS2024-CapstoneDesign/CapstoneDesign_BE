@@ -75,4 +75,29 @@ public class MemberController {
         MemberConverter.toFindEmailByNickNameResponse(
             memberQueryService.findMemberByNickName(nickName).get()));
   }
+
+  @Operation(summary = "비밀번호 찾기 API", description = "이메일을 통해 아이디를 찾습니다.")
+  @ApiResponse(responseCode = "201", description = "성공")
+  @PostMapping("/find-password")
+  public BaseResponse<Boolean> findPasswordByEmail(@RequestBody FindPasswordByEmailRequest request)
+      throws Exception {
+    return BaseResponse.onSuccess(memberCommandService.sendEmail(request));
+  }
+
+  @Operation(summary = "비밀번호 찾기 API", description = "이메일을 통해 아이디를 찾습니다.")
+  @ApiResponse(responseCode = "201", description = "성공")
+  @PostMapping("/check-code")
+  public BaseResponse<String> checkCode(@RequestBody VerifyCodeRequest request) throws Exception {
+    return BaseResponse.onSuccess(memberCommandService.isVerifiedNumber(request));
+  }
+
+  @Operation(summary = "비밀번호 변경 API", description = "새 비밀번호로 변경합니다.")
+  @ApiResponse(responseCode = "201", description = "성공")
+  @PutMapping("/change-password")
+  public BaseResponse<ChangePasswordResponse> changePassword(
+      @RequestHeader String token, @RequestBody ChangePasswordRequest request) throws Exception {
+    return BaseResponse.onSuccess(
+        MemberConverter.toChangePasswordResponse(
+            memberCommandService.findPassword(token, request)));
+  }
 }

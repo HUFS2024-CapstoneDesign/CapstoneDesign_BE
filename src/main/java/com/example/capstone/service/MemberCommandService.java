@@ -17,4 +17,10 @@ public interface MemberCommandService {
   AuthToken loginKakao(OAuthLoginParams params);
 
   TokenResponse reissue(ReissueRequest request);
+
+  Boolean sendEmail(FindPasswordByEmailRequest request) throws Exception;
+
+  String isVerifiedNumber(VerifyCodeRequest request);
+
+  Member findPassword(String token, ChangePasswordRequest request);
 }

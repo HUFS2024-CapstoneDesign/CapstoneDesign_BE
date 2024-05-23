@@ -39,4 +39,8 @@ public class Member {
   public void setSocialType(SocialType socialType) {
     this.socialType = socialType;
   }
+
+  public void setPassword(Password password) {
+    this.password = password;
+  }
 }
