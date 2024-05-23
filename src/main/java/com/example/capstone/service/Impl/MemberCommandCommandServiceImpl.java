@@ -132,4 +132,20 @@ public class MemberCommandCommandServiceImpl implements MemberCommandService {
       throw new MemberException(GlobalErrorCode.MEMBER_NOT_FOUND);
     }
   }
+
+  @Override
+  public Member isVerifiedNumber(VerifyCodeRequest request) {
+    if (!((redisUtil.hasKey(request.getEmail())))
+        && redisUtil.getEmailCertification(request.getEmail()).equals(request.getCode())) {
+      throw new MemberException(GlobalErrorCode.NUMBER_NOT_MATCH);
+    }
+
+    redisUtil.deleteEmailCertification(request.getEmail());
+
+    try {
+      return memberQueryService.findMemberByEmail(request.getEmail());
+    } catch (MemberException e) {
+      throw new MemberException(GlobalErrorCode.MEMBER_NOT_FOUND);
+    }
+  }
 }

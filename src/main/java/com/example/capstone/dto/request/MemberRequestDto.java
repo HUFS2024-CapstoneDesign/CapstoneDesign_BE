@@ -29,4 +29,10 @@ public class MemberRequestDto {
   public static class FindPasswordByEmailRequest {
     String email;
   }
+
+  @Getter
+  public static class VerifyCodeRequest {
+    String email;
+    String code;
+  }
 }

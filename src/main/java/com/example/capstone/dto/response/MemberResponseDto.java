@@ -31,4 +31,14 @@ public class MemberResponseDto {
   public static class FindEmailByNickNameResponse {
     String email;
   }
+
+  @Getter
+  @Builder
+  @NoArgsConstructor(access = AccessLevel.PROTECTED)
+  @AllArgsConstructor(access = AccessLevel.PROTECTED)
+  public static class CheckCodeResponse {
+    Long memberId;
+    String nickName;
+    String email;
+  }
 }

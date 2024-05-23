@@ -19,4 +19,6 @@ public interface MemberCommandService {
   TokenResponse reissue(ReissueRequest request);
 
   Boolean sendEmail(FindPasswordByEmailRequest request) throws Exception;
+
+  Member isVerifiedNumber(VerifyCodeRequest request);
 }

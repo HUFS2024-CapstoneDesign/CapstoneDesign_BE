@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class MailUtil {
 
   private final JavaMailSender javaMailSender;
+  private final RedisUtil redisUtil;
 
   public String generateRandomNumber() {
     Random random = new Random();
@@ -44,6 +45,8 @@ public class MailUtil {
 
     message.setText(content, "utf-8", "html");
     message.setFrom(new InternetAddress("pos06058@naver.com", "CatchHealth"));
+
+    redisUtil.createEmailCertification(email, code);
 
     return message;
   }

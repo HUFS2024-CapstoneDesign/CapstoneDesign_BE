@@ -79,8 +79,17 @@ public class MemberController {
   @Operation(summary = "비밀번호 찾기 API", description = "이메일을 통해 아이디를 찾습니다.")
   @ApiResponse(responseCode = "201", description = "성공")
   @PostMapping("/find-password")
-  public BaseResponse<Boolean> reissue(@RequestBody FindPasswordByEmailRequest request)
+  public BaseResponse<Boolean> findPasswordByEmail(@RequestBody FindPasswordByEmailRequest request)
       throws Exception {
     return BaseResponse.onSuccess(memberCommandService.sendEmail(request));
+  }
+
+  @Operation(summary = "비밀번호 찾기 API", description = "이메일을 통해 아이디를 찾습니다.")
+  @ApiResponse(responseCode = "201", description = "성공")
+  @PostMapping("/check-code")
+  public BaseResponse<CheckCodeResponse> checkCode(@RequestBody VerifyCodeRequest request)
+      throws Exception {
+    return BaseResponse.onSuccess(
+        MemberConverter.toCheckCodeResponse(memberCommandService.isVerifiedNumber(request)));
   }
 }
