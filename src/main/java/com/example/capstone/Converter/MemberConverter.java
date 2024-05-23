@@ -65,4 +65,8 @@ public class MemberConverter {
         .refreshToken(newRefreshToken)
         .build();
   }
+
+  public static FindEmailByNickNameResponse toFindEmailByNickNameResponse(Member member) {
+    return FindEmailByNickNameResponse.builder().email(member.getEmail()).build();
+  }
 }

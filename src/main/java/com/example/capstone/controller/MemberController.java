@@ -10,6 +10,7 @@ import com.example.capstone.dto.response.MemberResponseDto.*;
 import com.example.capstone.exception.GlobalErrorCode;
 import com.example.capstone.kakao.KakaoLoginParams;
 import com.example.capstone.service.MemberCommandService;
+import com.example.capstone.service.MemberQueryService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberController {
 
   private final MemberCommandService memberCommandService;
+  private final MemberQueryService memberQueryService;
 
   @Operation(summary = "회원가입 API", description = "회원가입을 진행합니다")
   @ApiResponses({
@@ -63,5 +65,14 @@ public class MemberController {
   @PostMapping("/reissue")
   public BaseResponse<TokenResponse> reissue(@RequestBody ReissueRequest request) {
     return BaseResponse.onSuccess(memberCommandService.reissue(request));
+  }
+
+  @Operation(summary = "아이디 찾기 API", description = "닉네임을 통해 아이디를 찾습니다.")
+  @ApiResponse(responseCode = "200", description = "성공")
+  @GetMapping("/find-id")
+  public BaseResponse<FindEmailByNickNameResponse> reissue(@RequestParam String nickName) {
+    return BaseResponse.onSuccess(
+        MemberConverter.toFindEmailByNickNameResponse(
+            memberQueryService.findMemberByNickName(nickName).get()));
   }
 }
