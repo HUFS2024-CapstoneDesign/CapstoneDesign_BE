@@ -5,6 +5,8 @@ import java.time.Duration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.example.capstone.domain.member.Member;
+
 import lombok.RequiredArgsConstructor;
 
 @Repository
@@ -33,5 +35,17 @@ public class RedisUtil {
   // Redis의 인증번호를 삭제합니다
   public void deleteEmailCertification(String email) {
     stringRedisTemplate.delete(PREFIX + email);
+  }
+
+  public String getMemberByToken(String token) {
+    return stringRedisTemplate.opsForValue().get(token);
+  }
+
+  public void createFindPasswordToken(String token, Member member) {
+    stringRedisTemplate.opsForValue().set(token, member.getEmail(), LIMIT_TIME);
+  }
+
+  public void deleteFindPasswordToken(String email) {
+    stringRedisTemplate.delete(email);
   }
 }

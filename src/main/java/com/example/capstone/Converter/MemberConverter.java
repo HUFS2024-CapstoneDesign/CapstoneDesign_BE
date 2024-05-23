@@ -70,11 +70,10 @@ public class MemberConverter {
     return FindEmailByNickNameResponse.builder().email(member.getEmail()).build();
   }
 
-  public static CheckCodeResponse toCheckCodeResponse(Member member) {
-    return CheckCodeResponse.builder()
+  public static ChangePasswordResponse toChangePasswordResponse(Member member) {
+    return ChangePasswordResponse.builder()
         .memberId(member.getId())
         .email(member.getEmail())
-        .nickName(member.getNickName())
         .build();
   }
 }

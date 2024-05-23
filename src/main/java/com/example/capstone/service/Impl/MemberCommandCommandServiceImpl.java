@@ -1,6 +1,7 @@
 package com.example.capstone.service.Impl;
 
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import jakarta.transaction.Transactional;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.example.capstone.Converter.MemberConverter;
 import com.example.capstone.domain.Enums.SocialType;
 import com.example.capstone.domain.member.Member;
+import com.example.capstone.domain.member.Password;
 import com.example.capstone.dto.request.MemberRequestDto.*;
 import com.example.capstone.dto.response.MemberResponseDto.*;
 import com.example.capstone.exception.GlobalErrorCode;
@@ -134,7 +136,7 @@ public class MemberCommandCommandServiceImpl implements MemberCommandService {
   }
 
   @Override
-  public Member isVerifiedNumber(VerifyCodeRequest request) {
+  public String isVerifiedNumber(VerifyCodeRequest request) {
     if (!((redisUtil.hasKey(request.getEmail())))
         && redisUtil.getEmailCertification(request.getEmail()).equals(request.getCode())) {
       throw new MemberException(GlobalErrorCode.NUMBER_NOT_MATCH);
@@ -143,9 +145,29 @@ public class MemberCommandCommandServiceImpl implements MemberCommandService {
     redisUtil.deleteEmailCertification(request.getEmail());
 
     try {
-      return memberQueryService.findMemberByEmail(request.getEmail());
+      Member member = memberQueryService.findMemberByEmail(request.getEmail());
+      String token = UUID.randomUUID().toString();
+      redisUtil.createFindPasswordToken(token, member);
+      return token;
     } catch (MemberException e) {
       throw new MemberException(GlobalErrorCode.MEMBER_NOT_FOUND);
     }
+  }
+
+  @Override
+  public Member findPassword(String token, ChangePasswordRequest request) {
+
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+    System.out.println(token);
+    System.out.println(redisUtil.getMemberByToken(token).trim());
+
+    Member member = memberQueryService.findMemberByEmail(redisUtil.getMemberByToken(token).trim());
+
+    redisUtil.deleteFindPasswordToken(member.getEmail());
+
+    member.setPassword(Password.encrypt(request.getPassword(), encoder));
+
+    return memberRepository.save(member);
   }
 }

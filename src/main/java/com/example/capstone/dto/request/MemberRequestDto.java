@@ -35,4 +35,9 @@ public class MemberRequestDto {
     String email;
     String code;
   }
+
+  @Getter
+  public static class ChangePasswordRequest {
+    String password;
+  }
 }

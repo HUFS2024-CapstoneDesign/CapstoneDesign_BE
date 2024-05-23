@@ -20,5 +20,7 @@ public interface MemberCommandService {
 
   Boolean sendEmail(FindPasswordByEmailRequest request) throws Exception;
 
-  Member isVerifiedNumber(VerifyCodeRequest request);
+  String isVerifiedNumber(VerifyCodeRequest request);
+
+  Member findPassword(String token, ChangePasswordRequest request);
 }

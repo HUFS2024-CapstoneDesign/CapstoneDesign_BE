@@ -36,9 +36,8 @@ public class MemberResponseDto {
   @Builder
   @NoArgsConstructor(access = AccessLevel.PROTECTED)
   @AllArgsConstructor(access = AccessLevel.PROTECTED)
-  public static class CheckCodeResponse {
+  public static class ChangePasswordResponse {
     Long memberId;
-    String nickName;
     String email;
   }
 }
