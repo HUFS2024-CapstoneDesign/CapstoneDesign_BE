@@ -175,4 +175,10 @@ public class MemberCommandCommandServiceImpl implements MemberCommandService {
 
     return memberRepository.save(member);
   }
+
+  @Override
+  public Member setAddress(Member member, SetAddressRequest request) {
+    member.setAddress(request.getAddress());
+    return memberRepository.save(member);
+  }
 }

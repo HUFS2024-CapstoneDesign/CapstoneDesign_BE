@@ -50,4 +50,9 @@ public class MemberRequestDto {
   public static class IsDuplicatedEmailRequest {
     String email;
   }
+
+  @Getter
+  public static class SetAddressRequest {
+    String address;
+  }
 }

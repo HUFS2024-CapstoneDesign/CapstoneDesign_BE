@@ -23,4 +23,6 @@ public interface MemberCommandService {
   String isVerifiedNumber(VerifyCodeRequest request);
 
   Member findPassword(String token, ChangePasswordRequest request);
+
+  Member setAddress(Member member, SetAddressRequest request);
 }

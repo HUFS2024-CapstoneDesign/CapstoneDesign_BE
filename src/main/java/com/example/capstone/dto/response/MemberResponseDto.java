@@ -40,4 +40,13 @@ public class MemberResponseDto {
     Long memberId;
     String email;
   }
+
+  @Getter
+  @Builder
+  @NoArgsConstructor(access = AccessLevel.PROTECTED)
+  @AllArgsConstructor(access = AccessLevel.PROTECTED)
+  public static class SetAddressResponse {
+    Long memberId;
+    String address;
+  }
 }

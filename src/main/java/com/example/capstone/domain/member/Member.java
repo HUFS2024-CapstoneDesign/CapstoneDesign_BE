@@ -43,4 +43,8 @@ public class Member {
   public void setPassword(Password password) {
     this.password = password;
   }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
 }
