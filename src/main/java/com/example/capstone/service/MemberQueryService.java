@@ -10,5 +10,5 @@ public interface MemberQueryService {
 
   Optional<Member> findMemberByNickName(String nickName);
 
-  Member findMemberByEmail(String email);
+  Optional<Member> findMemberByEmail(String email);
 }

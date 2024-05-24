@@ -33,9 +33,7 @@ public class MemberQueryCommandServiceImpl implements MemberQueryService {
   }
 
   @Override
-  public Member findMemberByEmail(String email) {
-    return memberRepository
-        .findByEmail(email)
-        .orElseThrow(() -> new MemberException(GlobalErrorCode.MEMBER_NOT_FOUND));
+  public Optional<Member> findMemberByEmail(String email) {
+    return memberRepository.findByEmail(email);
   }
 }
