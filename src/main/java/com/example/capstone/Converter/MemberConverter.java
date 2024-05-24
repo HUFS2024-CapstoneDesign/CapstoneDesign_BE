@@ -76,4 +76,11 @@ public class MemberConverter {
         .email(member.getEmail())
         .build();
   }
+
+  public static SetAddressResponse toSetAddressResponse(Member member) {
+    return SetAddressResponse.builder()
+        .memberId(member.getId())
+        .address(member.getAddress())
+        .build();
+  }
 }

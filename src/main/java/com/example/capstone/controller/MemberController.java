@@ -4,7 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.capstone.Converter.MemberConverter;
+import com.example.capstone.annotation.auth.AuthMember;
 import com.example.capstone.common.BaseResponse;
+import com.example.capstone.domain.member.Member;
 import com.example.capstone.dto.request.MemberRequestDto.*;
 import com.example.capstone.dto.response.MemberResponseDto.*;
 import com.example.capstone.exception.GlobalErrorCode;
@@ -13,6 +15,7 @@ import com.example.capstone.service.MemberCommandService;
 import com.example.capstone.service.MemberQueryService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -116,5 +119,14 @@ public class MemberController {
   public BaseResponse<Boolean> isDuplicatedEmail(@RequestBody IsDuplicatedEmailRequest request) {
     return BaseResponse.onSuccess(
         !(memberQueryService.findMemberByNickName(request.getEmail()).isPresent()));
+  }
+
+  @Operation(summary = "주소 변경 API", description = "회원의 주소를 변경합니다.")
+  @ApiResponse(responseCode = "201", description = "성공")
+  @PutMapping("/set-address")
+  public BaseResponse<SetAddressResponse> setAddress(
+      @Parameter(hidden = true) @AuthMember Member member, @RequestBody SetAddressRequest request) {
+    return BaseResponse.onSuccess(
+        MemberConverter.toSetAddressResponse(memberCommandService.setAddress(member, request)));
   }
 }
