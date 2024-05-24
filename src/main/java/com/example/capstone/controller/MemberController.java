@@ -100,4 +100,13 @@ public class MemberController {
         MemberConverter.toChangePasswordResponse(
             memberCommandService.findPassword(token, request)));
   }
+
+  @Operation(summary = "닉네임 중복 확인 API", description = "닉네임 중복을 확인합니다.")
+  @ApiResponse(responseCode = "200", description = "성공")
+  @PostMapping("/check-nickname")
+  public BaseResponse<Boolean> isDuplicatedNickName(
+      @RequestBody IsDuplicatedNickNameRequest request) {
+    return BaseResponse.onSuccess(
+        !(memberQueryService.findMemberByNickName(request.getNickName()).isPresent()));
+  }
 }

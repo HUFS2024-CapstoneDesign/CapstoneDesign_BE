@@ -58,7 +58,10 @@ public class MemberCommandCommandServiceImpl implements MemberCommandService {
 
   @Override
   public TokenResponse login(LoginMemberRequest request) {
-    Member member = memberQueryService.findMemberByEmail(request.getEmail());
+    Member member =
+        memberQueryService
+            .findMemberByEmail(request.getEmail())
+            .orElseThrow(() -> new MemberException(GlobalErrorCode.MEMBER_NOT_FOUND));
 
     if (!(member.getPassword().isSamePassword(request.getPassword(), bCryptPasswordEncoder))) {
       throw new MemberException(GlobalErrorCode.PASSWORD_MISMATCH);
@@ -144,14 +147,13 @@ public class MemberCommandCommandServiceImpl implements MemberCommandService {
 
     redisUtil.deleteEmailCertification(request.getEmail());
 
-    try {
-      Member member = memberQueryService.findMemberByEmail(request.getEmail());
-      String token = UUID.randomUUID().toString();
-      redisUtil.createFindPasswordToken(token, member);
-      return token;
-    } catch (MemberException e) {
-      throw new MemberException(GlobalErrorCode.MEMBER_NOT_FOUND);
-    }
+    Member member =
+        memberQueryService
+            .findMemberByEmail(request.getEmail())
+            .orElseThrow(() -> new MemberException(GlobalErrorCode.MEMBER_NOT_FOUND));
+    String token = UUID.randomUUID().toString();
+    redisUtil.createFindPasswordToken(token, member);
+    return token;
   }
 
   @Override
@@ -162,7 +164,10 @@ public class MemberCommandCommandServiceImpl implements MemberCommandService {
     System.out.println(token);
     System.out.println(redisUtil.getMemberByToken(token).trim());
 
-    Member member = memberQueryService.findMemberByEmail(redisUtil.getMemberByToken(token).trim());
+    Member member =
+        memberQueryService
+            .findMemberByEmail(redisUtil.getMemberByToken(token).trim())
+            .orElseThrow(() -> new MemberException(GlobalErrorCode.MEMBER_NOT_FOUND));
 
     redisUtil.deleteFindPasswordToken(member.getEmail());
 

@@ -40,4 +40,9 @@ public class MemberRequestDto {
   public static class ChangePasswordRequest {
     String password;
   }
+
+  @Getter
+  public static class IsDuplicatedNickNameRequest {
+    String nickName;
+  }
 }
