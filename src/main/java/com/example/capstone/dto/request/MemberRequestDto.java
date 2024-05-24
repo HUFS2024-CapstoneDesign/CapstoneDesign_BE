@@ -45,4 +45,9 @@ public class MemberRequestDto {
   public static class IsDuplicatedNickNameRequest {
     String nickName;
   }
+
+  @Getter
+  public static class IsDuplicatedEmailRequest {
+    String email;
+  }
 }

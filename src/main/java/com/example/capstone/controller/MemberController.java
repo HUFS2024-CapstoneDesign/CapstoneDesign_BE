@@ -109,4 +109,12 @@ public class MemberController {
     return BaseResponse.onSuccess(
         !(memberQueryService.findMemberByNickName(request.getNickName()).isPresent()));
   }
+
+  @Operation(summary = "이메일 중복 확인 API", description = "이메일 중복을 확인합니다.")
+  @ApiResponse(responseCode = "200", description = "성공")
+  @PostMapping("/check-email")
+  public BaseResponse<Boolean> isDuplicatedEmail(@RequestBody IsDuplicatedEmailRequest request) {
+    return BaseResponse.onSuccess(
+        !(memberQueryService.findMemberByNickName(request.getEmail()).isPresent()));
+  }
 }
