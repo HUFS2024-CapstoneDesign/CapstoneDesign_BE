@@ -25,4 +25,6 @@ public interface MemberCommandService {
   Member findPassword(String token, ChangePasswordRequest request);
 
   Member setAddress(Member member, SetAddressRequest request);
+
+  String deleteMember(Member member);
 }

@@ -181,4 +181,15 @@ public class MemberCommandCommandServiceImpl implements MemberCommandService {
     member.setAddress(request.getAddress());
     return memberRepository.save(member);
   }
+
+  @Override
+  public String deleteMember(Member member) {
+    Long memberId = member.getId();
+    try {
+      memberRepository.delete(member);
+      return "삭제완료";
+    } catch (MemberException e) {
+      throw new MemberException(GlobalErrorCode.MEMBER_NOT_FOUND);
+    }
+  }
 }
