@@ -40,6 +40,7 @@ spring:
       url:
         auth: https://kauth.kakao.com
         api: https://kapi.kakao.com
+        map: https://dapi.kakao.com/v2/local/search/keyword.json
   virtual:
     password: ${KAKAO_PASSWORD}
   # Redis
@@ -82,6 +83,7 @@ spring:
       url:
         auth: https://kauth.kakao.com
         api: https://kapi.kakao.com
+        map: https://dapi.kakao.com/v2/local/search/keyword.json
   virtual:
     password: ${SOCIAL_PASSWORD}
   data:
