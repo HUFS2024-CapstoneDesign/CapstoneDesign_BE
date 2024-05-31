@@ -150,6 +150,9 @@ dependencies {
     // spring email
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
+    // json
+    implementation 'org.json:json:20210307'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

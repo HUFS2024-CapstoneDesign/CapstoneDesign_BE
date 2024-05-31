@@ -1,5 +1,7 @@
 package com.example.capstone.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +13,7 @@ import com.example.capstone.dto.request.MemberRequestDto.*;
 import com.example.capstone.dto.response.MemberResponseDto.*;
 import com.example.capstone.exception.GlobalErrorCode;
 import com.example.capstone.kakao.KakaoLoginParams;
+import com.example.capstone.kakao.KakaoMapService;
 import com.example.capstone.service.MemberCommandService;
 import com.example.capstone.service.MemberQueryService;
 
@@ -29,6 +32,7 @@ public class MemberController {
 
   private final MemberCommandService memberCommandService;
   private final MemberQueryService memberQueryService;
+  private final KakaoMapService kakaoMapService;
 
   @Operation(summary = "회원가입 API", description = "회원가입을 진행합니다")
   @ApiResponses({
@@ -135,5 +139,13 @@ public class MemberController {
   @DeleteMapping("/delete")
   public BaseResponse<String> deleteMember(@Parameter(hidden = true) @AuthMember Member member) {
     return BaseResponse.onSuccess(memberCommandService.deleteMember(member));
+  }
+
+  @Operation(summary = "병원 검색 API", description = "5km 이내의 병원을 검색합니다.")
+  @ApiResponse(responseCode = "200", description = "성공")
+  @GetMapping("/search")
+  public BaseResponse<List<KakaoMapService.KakaoMapResponse>> searchPlaces(
+      @Parameter(hidden = true) @AuthMember Member member) {
+    return BaseResponse.onSuccess(kakaoMapService.searchPlace(member));
   }
 }
