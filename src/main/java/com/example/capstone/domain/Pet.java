@@ -29,8 +29,6 @@ public class Pet {
 
   private String species;
 
-  private String petImage;
-
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "member_id")
   private Member member;
