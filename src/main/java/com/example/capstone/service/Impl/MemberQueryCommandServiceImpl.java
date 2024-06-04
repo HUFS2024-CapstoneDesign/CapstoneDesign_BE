@@ -5,9 +5,11 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.capstone.annotation.aop.TimeTrace;
 import com.example.capstone.domain.member.Member;
 import com.example.capstone.exception.GlobalErrorCode;
 import com.example.capstone.exception.custom.MemberException;
+import com.example.capstone.repository.MemberCustomRepository;
 import com.example.capstone.repository.MemberRepository;
 import com.example.capstone.service.MemberQueryService;
 
@@ -19,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberQueryCommandServiceImpl implements MemberQueryService {
 
   private final MemberRepository memberRepository;
+  private final MemberCustomRepository memberCustomRepository;
 
   @Override
   public Member findMemberById(Long memberId) {
@@ -32,8 +35,17 @@ public class MemberQueryCommandServiceImpl implements MemberQueryService {
     return memberRepository.findByNickName(nickName);
   }
 
+  @TimeTrace
   @Override
   public Optional<Member> findMemberByEmail(String email) {
+    System.out.println("JPA");
     return memberRepository.findByEmail(email);
+  }
+
+  @TimeTrace
+  @Override
+  public Optional<Member> findMemberByEmailDSL(String email) {
+    System.out.println("DSL");
+    return memberCustomRepository.findByEmail(email);
   }
 }
