@@ -127,14 +127,6 @@ public class MemberController {
         !(memberQueryService.findMemberByNickName(request.getEmail()).isPresent()));
   }
 
-  @Operation(summary = "TEST API", description = "AOP 타임을 비교합니다.")
-  @ApiResponse(responseCode = "200", description = "성공")
-  @PostMapping("/test")
-  public void testAOP(@RequestBody IsDuplicatedEmailRequest request) {
-    memberQueryService.findMemberByEmail(request.getEmail());
-    memberQueryService.findMemberByEmailDSL(request.getEmail());
-  }
-
   @Operation(summary = "주소 변경 API", description = "회원의 주소를 변경합니다.")
   @ApiResponse(responseCode = "201", description = "성공")
   @PutMapping("/set-address")
