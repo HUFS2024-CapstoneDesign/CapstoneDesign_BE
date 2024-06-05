@@ -136,6 +136,8 @@ public class MemberController {
         MemberConverter.toSetAddressResponse(memberCommandService.setAddress(member, request)));
   }
 
+  ///
+
   @Operation(summary = "회원 탈퇴 API", description = "회원을 탈퇴시킵니다.")
   @ApiResponse(responseCode = "201", description = "성공")
   @DeleteMapping("/delete")
