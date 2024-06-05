@@ -141,6 +141,8 @@ public class MemberController {
     return BaseResponse.onSuccess(memberCommandService.deleteMember(member));
   }
 
+  //
+
   @Operation(summary = "병원 검색 API", description = "5km 이내의 병원을 검색합니다.")
   @ApiResponse(responseCode = "200", description = "성공")
   @GetMapping("/search")
