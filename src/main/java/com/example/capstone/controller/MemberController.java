@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.capstone.Converter.MemberConverter;
+import com.example.capstone.annotation.aop.TimeTrace;
 import com.example.capstone.annotation.auth.AuthMember;
 import com.example.capstone.common.BaseResponse;
 import com.example.capstone.domain.member.Member;
@@ -120,6 +121,7 @@ public class MemberController {
   @Operation(summary = "이메일 중복 확인 API", description = "이메일 중복을 확인합니다.")
   @ApiResponse(responseCode = "200", description = "성공")
   @PostMapping("/check-email")
+  @TimeTrace
   public BaseResponse<Boolean> isDuplicatedEmail(@RequestBody IsDuplicatedEmailRequest request) {
     return BaseResponse.onSuccess(
         !(memberQueryService.findMemberByNickName(request.getEmail()).isPresent()));
@@ -133,6 +135,8 @@ public class MemberController {
     return BaseResponse.onSuccess(
         MemberConverter.toSetAddressResponse(memberCommandService.setAddress(member, request)));
   }
+
+  ///
 
   @Operation(summary = "회원 탈퇴 API", description = "회원을 탈퇴시킵니다.")
   @ApiResponse(responseCode = "201", description = "성공")
@@ -148,4 +152,5 @@ public class MemberController {
       @Parameter(hidden = true) @AuthMember Member member) {
     return BaseResponse.onSuccess(kakaoMapService.searchPlace(member));
   }
+
 }

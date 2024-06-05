@@ -40,7 +40,8 @@ public class SecurityConfig {
     "api/v1/members/check-code",
     "api/v1/members/change-password",
     "api/v1/members/check-nickname",
-    "api/v1/members/check-email"
+    "api/v1/members/check-email",
+    "api/v1/members/test"
   };
 
   @Bean

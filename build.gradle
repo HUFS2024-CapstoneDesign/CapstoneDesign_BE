@@ -153,6 +153,10 @@ dependencies {
     // json
     implementation 'org.json:json:20210307'
 
+
+    // AOP Time
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
