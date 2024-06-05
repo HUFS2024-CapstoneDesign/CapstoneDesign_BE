@@ -148,4 +148,6 @@ public class MemberController {
       @Parameter(hidden = true) @AuthMember Member member) {
     return BaseResponse.onSuccess(kakaoMapService.searchPlace(member));
   }
+
+  ///
 }
