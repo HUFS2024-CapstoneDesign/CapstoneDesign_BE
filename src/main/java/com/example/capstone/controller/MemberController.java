@@ -91,7 +91,7 @@ public class MemberController {
     return BaseResponse.onSuccess(memberCommandService.sendEmail(request));
   }
 
-  @Operation(summary = "비밀번호 찾기 API", description = "이메일을 통해 아이디를 찾습니다.")
+  @Operation(summary = "비밀번호 찾기 인증번호 검증 API", description = "이메일을 통해 받은 인증번호를 검증합니다.")
   @ApiResponse(responseCode = "201", description = "성공")
   @PostMapping("/check-code")
   public BaseResponse<String> checkCode(@RequestBody VerifyCodeRequest request) throws Exception {
@@ -122,7 +122,7 @@ public class MemberController {
   @PostMapping("/check-email")
   public BaseResponse<Boolean> isDuplicatedEmail(@RequestBody IsDuplicatedEmailRequest request) {
     return BaseResponse.onSuccess(
-        !(memberQueryService.findMemberByNickName(request.getEmail()).isPresent()));
+        !(memberQueryService.findMemberByEmail(request.getEmail()).isPresent()));
   }
 
   @Operation(summary = "주소 변경 API", description = "회원의 주소를 변경합니다.")
@@ -149,5 +149,15 @@ public class MemberController {
   public BaseResponse<List<KakaoMapService.KakaoMapResponse>> searchPlaces(
       @Parameter(hidden = true) @AuthMember Member member) {
     return BaseResponse.onSuccess(kakaoMapService.searchPlace(member));
+  }
+
+  @Operation(summary = "닉네임 변경 API", description = "회원의 닉네임을 변경합니다.")
+  @ApiResponse(responseCode = "201", description = "성공")
+  @PutMapping("/set-nickname")
+  public BaseResponse<SetNickNameResponse> setNickName(
+      @Parameter(hidden = true) @AuthMember Member member,
+      @RequestBody SetNickNameRequest request) {
+    return BaseResponse.onSuccess(
+        MemberConverter.toSetNickNameResponse(memberCommandService.setNickName(member, request)));
   }
 }

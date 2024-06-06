@@ -49,4 +49,13 @@ public class MemberResponseDto {
     Long memberId;
     String address;
   }
+
+  @Getter
+  @Builder
+  @NoArgsConstructor(access = AccessLevel.PROTECTED)
+  @AllArgsConstructor(access = AccessLevel.PROTECTED)
+  public static class SetNickNameResponse {
+    Long memberId;
+    String nickName;
+  }
 }

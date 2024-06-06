@@ -20,7 +20,8 @@ public enum GlobalErrorCode {
   PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
   INVALID_TOKEN(HttpStatus.BAD_REQUEST, "잘못된 토큰입니다."),
   FAIL_TO_SEND(HttpStatus.CONFLICT, "메일 보내기를 실패하였습니다."),
-  NUMBER_NOT_MATCH(HttpStatus.BAD_REQUEST, "인증번호가 일치하지 않습니다.");
+  NUMBER_NOT_MATCH(HttpStatus.BAD_REQUEST, "인증번호가 일치하지 않습니다."),
+  DUPLICATED_NICKNAME(HttpStatus.CONFLICT, "이미 존재하는 닉네임입니다.");
 
   private final HttpStatus httpStatus;
   private final String message;

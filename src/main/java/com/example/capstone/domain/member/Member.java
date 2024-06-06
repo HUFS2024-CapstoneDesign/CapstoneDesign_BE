@@ -47,4 +47,8 @@ public class Member {
   public void setAddress(String address) {
     this.address = address;
   }
+
+  public void setNickName(String nickName) {
+    this.nickName = nickName;
+  }
 }

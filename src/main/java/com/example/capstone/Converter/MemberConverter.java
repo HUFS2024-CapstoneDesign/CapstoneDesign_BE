@@ -83,4 +83,11 @@ public class MemberConverter {
         .address(member.getAddress())
         .build();
   }
+
+  public static SetNickNameResponse toSetNickNameResponse(Member member) {
+    return SetNickNameResponse.builder()
+        .memberId(member.getId())
+        .nickName(member.getNickName())
+        .build();
+  }
 }
