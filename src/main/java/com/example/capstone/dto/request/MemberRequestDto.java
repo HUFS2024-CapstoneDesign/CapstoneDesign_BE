@@ -55,4 +55,9 @@ public class MemberRequestDto {
   public static class SetAddressRequest {
     String address;
   }
+
+  @Getter
+  public static class SetNickNameRequest {
+    String nickName;
+  }
 }

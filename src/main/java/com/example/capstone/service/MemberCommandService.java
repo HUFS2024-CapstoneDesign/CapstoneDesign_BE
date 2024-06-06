@@ -27,4 +27,6 @@ public interface MemberCommandService {
   Member setAddress(Member member, SetAddressRequest request);
 
   String deleteMember(Member member);
+
+  Member setNickName(Member member, SetNickNameRequest request);
 }

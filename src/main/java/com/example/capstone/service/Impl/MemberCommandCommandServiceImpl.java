@@ -192,4 +192,16 @@ public class MemberCommandCommandServiceImpl implements MemberCommandService {
       throw new MemberException(GlobalErrorCode.MEMBER_NOT_FOUND);
     }
   }
+
+  @Override
+  public Member setNickName(Member member, SetNickNameRequest request) {
+
+    if (memberRepository.findByNickName(request.getNickName()).isPresent()) {
+      throw new MemberException(GlobalErrorCode.DUPLICATED_NICKNAME);
+    }
+
+    member.setNickName(request.getNickName());
+
+    return memberRepository.save(member);
+  }
 }
