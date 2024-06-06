@@ -122,7 +122,7 @@ public class MemberController {
   @PostMapping("/check-email")
   public BaseResponse<Boolean> isDuplicatedEmail(@RequestBody IsDuplicatedEmailRequest request) {
     return BaseResponse.onSuccess(
-        !(memberQueryService.findMemberByNickName(request.getEmail()).isPresent()));
+        !(memberQueryService.findMemberByEmail(request.getEmail()).isPresent()));
   }
 
   @Operation(summary = "주소 변경 API", description = "회원의 주소를 변경합니다.")
