@@ -141,8 +141,6 @@ public class MemberController {
     return BaseResponse.onSuccess(memberCommandService.deleteMember(member));
   }
 
-  //
-
   @Operation(summary = "병원 검색 API", description = "5km 이내의 병원을 검색합니다.")
   @ApiResponse(responseCode = "200", description = "성공")
   @GetMapping("/search")
@@ -159,5 +157,22 @@ public class MemberController {
       @RequestBody SetNickNameRequest request) {
     return BaseResponse.onSuccess(
         MemberConverter.toSetNickNameResponse(memberCommandService.setNickName(member, request)));
+  }
+
+  @Operation(summary = "회원 정보 조회 API", description = "회원 정보를 조회합니다.")
+  @ApiResponse(responseCode = "200", description = "성공")
+  @GetMapping("/")
+  public BaseResponse<GetMemberResponse> getMember(
+      @Parameter(hidden = true) @AuthMember Member member) {
+    return BaseResponse.onSuccess(MemberConverter.toGetMemberResponse(member));
+  }
+
+  @Operation(summary = "로그 아웃 API", description = "로그 아웃합니다.")
+  @ApiResponse(responseCode = "201", description = "성공")
+  @PostMapping("/logout")
+  public BaseResponse<String> logout(
+      @Parameter(hidden = true) @AuthMember Member member,
+      @RequestHeader("Authorization") String token) {
+    return BaseResponse.onSuccess(memberCommandService.logout(member, token));
   }
 }

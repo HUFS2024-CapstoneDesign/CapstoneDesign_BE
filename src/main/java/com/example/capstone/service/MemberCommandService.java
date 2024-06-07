@@ -29,4 +29,6 @@ public interface MemberCommandService {
   String deleteMember(Member member);
 
   Member setNickName(Member member, SetNickNameRequest request);
+
+  String logout(Member member, String token);
 }

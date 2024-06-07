@@ -90,4 +90,14 @@ public class MemberConverter {
         .nickName(member.getNickName())
         .build();
   }
+
+  public static GetMemberResponse toGetMemberResponse(Member member) {
+    return GetMemberResponse.builder()
+        .memberId(member.getId())
+        .email(member.getEmail())
+        .nickName(member.getNickName())
+        .address(member.getAddress())
+        .profileImage(member.getProfileImage())
+        .build();
+  }
 }

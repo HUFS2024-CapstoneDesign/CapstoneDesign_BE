@@ -58,4 +58,16 @@ public class MemberResponseDto {
     Long memberId;
     String nickName;
   }
+
+  @Getter
+  @Builder
+  @NoArgsConstructor(access = AccessLevel.PROTECTED)
+  @AllArgsConstructor(access = AccessLevel.PROTECTED)
+  public static class GetMemberResponse {
+    Long memberId;
+    String email;
+    String nickName;
+    String address;
+    String profileImage;
+  }
 }

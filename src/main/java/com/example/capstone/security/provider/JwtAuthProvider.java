@@ -1,6 +1,7 @@
 package com.example.capstone.security.provider;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import com.example.capstone.domain.member.Member;
 import com.example.capstone.exception.GlobalErrorCode;
 import com.example.capstone.exception.custom.TokenException;
 
@@ -80,7 +82,7 @@ public class JwtAuthProvider {
     try {
       Jws<Claims> claims = getClaims(token);
       Date expiredDate = claims.getBody().getExpiration();
-      return expiredDate.after(new Date());
+      return expiredDate.after(new Date()) && !isTokenBlacklisted(token);
     } catch (ExpiredJwtException e) {
       throw new RuntimeException();
     } catch (SecurityException
@@ -97,5 +99,42 @@ public class JwtAuthProvider {
       return Long.parseLong(claims.getSubject());
     }
     throw new TokenException(GlobalErrorCode.INVALID_TOKEN);
+  }
+
+  public Long getExpiration(String accessToken) {
+    // accessToken 남은 유효시간
+    Date expiration =
+        Jwts.parserBuilder()
+            .setSigningKey(secretKey)
+            .build()
+            .parseClaimsJws(accessToken)
+            .getBody()
+            .getExpiration();
+    // 현재 시간
+    Long now = new Date().getTime();
+    return (expiration.getTime() - now);
+  }
+
+  public void logoutUser(Member member, String token) {
+    System.out.println(token);
+
+    String atk = token.substring(7);
+
+    System.out.println(atk);
+
+    Long expiration = getExpiration(atk);
+
+    String redisKey = member.getId().toString();
+
+    // 1. Redis에서 사용자의 refreshToken 삭제
+    redisTemplate.delete(redisKey);
+
+    // 2. 블랙리스트에 JWT 토큰 추가
+    redisTemplate.opsForValue().set(atk, "logout", Duration.ofMillis(expiration));
+  }
+
+  private boolean isTokenBlacklisted(String token) {
+    String value = redisTemplate.opsForValue().get(token);
+    return "logout".equals(value);
   }
 }
