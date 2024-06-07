@@ -6,6 +6,7 @@ import java.util.List;
 import jakarta.persistence.*;
 
 import com.example.capstone.domain.Enums.Gender;
+import com.example.capstone.domain.common.BaseEntity;
 import com.example.capstone.domain.member.Member;
 
 import lombok.*;
@@ -15,7 +16,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-public class Pet {
+public class Pet extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

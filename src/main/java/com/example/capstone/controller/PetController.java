@@ -1,5 +1,7 @@
 package com.example.capstone.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +12,7 @@ import com.example.capstone.domain.member.Member;
 import com.example.capstone.dto.request.PetRequestDto.*;
 import com.example.capstone.dto.response.PetResponseDto.*;
 import com.example.capstone.service.PetCommandService;
+import com.example.capstone.service.PetQueryService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -25,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class PetController {
 
   private final PetCommandService petCommandService;
+  private final PetQueryService petQueryService;
 
   @Operation(summary = "애완동물 등록 API", description = "애완동물을 등록합니다")
   @ApiResponses({
@@ -36,5 +40,16 @@ public class PetController {
       @Parameter(hidden = true) @AuthMember Member member, @RequestBody CreatePetRequest request) {
     return BaseResponse.onSuccess(
         PetConverter.toCreatePetResponse(petCommandService.createPet(member, request)));
+  }
+
+  @Operation(summary = "애완동물 조회 API", description = "애완동물을 조회합니다")
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "성공"),
+  })
+  @GetMapping("/")
+  public BaseResponse<List<PetResponse>> getPetList(
+      @Parameter(hidden = true) @AuthMember Member member) {
+    return BaseResponse.onSuccess(
+        PetConverter.toPetResponseList(petQueryService.findPetByMember(member)));
   }
 }
