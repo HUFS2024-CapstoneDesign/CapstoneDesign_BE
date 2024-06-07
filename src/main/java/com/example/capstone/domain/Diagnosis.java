@@ -2,6 +2,8 @@ package com.example.capstone.domain;
 
 import jakarta.persistence.*;
 
+import com.example.capstone.domain.common.BaseEntity;
+
 import lombok.*;
 
 @Entity
@@ -9,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-public class Diagnosis {
+public class Diagnosis extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

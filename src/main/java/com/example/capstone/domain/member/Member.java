@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 
 import com.example.capstone.domain.Enums.SocialType;
 import com.example.capstone.domain.Pet;
+import com.example.capstone.domain.common.BaseEntity;
 
 import lombok.*;
 
@@ -15,7 +16,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-public class Member {
+public class Member extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

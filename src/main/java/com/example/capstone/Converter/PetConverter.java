@@ -1,5 +1,7 @@
 package com.example.capstone.Converter;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.example.capstone.domain.Enums.Gender;
@@ -28,5 +30,19 @@ public class PetConverter {
         .age(pet.getAge())
         .species(pet.getSpecies())
         .build();
+  }
+
+  public static PetResponse toPetResponse(Pet pet) {
+    return PetResponse.builder()
+        .name(pet.getName())
+        .gender(pet.getGender())
+        .age(pet.getAge())
+        .species(pet.getSpecies())
+        .diagnosisList(DiagnosisConverter.toDiagnosisResponseList(pet.getDiagnosisList()))
+        .build();
+  }
+
+  public static List<PetResponse> toPetResponseList(List<Pet> petList) {
+    return petList.stream().map(pet -> PetConverter.toPetResponse(pet)).toList();
   }
 }
