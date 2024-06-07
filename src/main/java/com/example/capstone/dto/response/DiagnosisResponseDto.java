@@ -11,7 +11,7 @@ public class DiagnosisResponseDto {
   @NoArgsConstructor(access = AccessLevel.PROTECTED)
   @AllArgsConstructor(access = AccessLevel.PROTECTED)
   public static class DiagnosisResponse {
-    String disease;
+    String diseaseName;
     LocalDateTime createdAt;
   }
 
