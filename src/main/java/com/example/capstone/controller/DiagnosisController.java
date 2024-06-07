@@ -31,15 +31,16 @@ public class DiagnosisController {
   @ApiResponses({
     @ApiResponse(responseCode = "201", description = "성공"),
   })
-  @PostMapping("/")
+  @PostMapping("/{petId}")
   @ResponseStatus(HttpStatus.CREATED)
   public BaseResponse<CreateDiagnosisResponse> signUpMember(
       @Parameter(hidden = true) @AuthMember Member member,
-      @RequestBody CreateDiagnosisRequest request) {
+      @RequestBody CreateDiagnosisRequest request,
+      @RequestParam(name = "petId") Long petId) {
     return BaseResponse.onSuccess(
         GlobalErrorCode.CREATED,
         DiagnosisConverter.toCreateDiagnosisResponse(
-            diagnosisCommandService.createDiagnosis(member, request)));
+            diagnosisCommandService.createDiagnosis(member, request, petId)));
   }
 
   @Operation(summary = "진단 삭제 API", description = "진단을 삭제합니다.")
