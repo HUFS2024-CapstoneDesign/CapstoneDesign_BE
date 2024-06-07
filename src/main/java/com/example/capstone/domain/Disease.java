@@ -22,6 +22,8 @@ public class Disease extends BaseEntity {
 
   private String code;
 
+  private String name;
+
   private String explanation;
 
   private String symptom1;
