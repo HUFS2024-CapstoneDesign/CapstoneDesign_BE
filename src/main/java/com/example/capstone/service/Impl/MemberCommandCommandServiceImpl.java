@@ -204,4 +204,10 @@ public class MemberCommandCommandServiceImpl implements MemberCommandService {
 
     return memberRepository.save(member);
   }
+
+  @Override
+  public String logout(Member member, String token) {
+    jwtAuthProvider.logoutUser(member, token);
+    return "로그 아웃";
+  }
 }
