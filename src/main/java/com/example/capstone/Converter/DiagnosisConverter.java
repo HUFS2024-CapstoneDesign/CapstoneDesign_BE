@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.capstone.domain.Diagnosis;
 import com.example.capstone.domain.Disease;
-import com.example.capstone.domain.member.Member;
+import com.example.capstone.domain.Pet;
 import com.example.capstone.dto.request.DiagnosisRequestDto.*;
 import com.example.capstone.dto.response.DiagnosisResponseDto.*;
 
@@ -26,12 +26,11 @@ public class DiagnosisConverter {
         .toList();
   }
 
-  public static Diagnosis toDiagnosis(
-      CreateDiagnosisRequest request, Disease disease, Member member) {
+  public static Diagnosis toDiagnosis(CreateDiagnosisRequest request, Disease disease, Pet pet) {
     return Diagnosis.builder()
         .medicalExpense(request.getMedicalExpense())
         .disease(disease)
-        .pet(member.getPetList().get(0))
+        .pet(pet)
         .build();
   }
 

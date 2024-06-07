@@ -7,7 +7,7 @@ import com.example.capstone.dto.response.DiagnosisResponseDto.*;
 
 public interface DiagnosisCommandService {
 
-  Diagnosis createDiagnosis(Member member, CreateDiagnosisRequest request);
+  Diagnosis createDiagnosis(Member member, CreateDiagnosisRequest request, Long petId);
 
   void deleteDiagnosis(Member member, Long diagnosisId);
 
