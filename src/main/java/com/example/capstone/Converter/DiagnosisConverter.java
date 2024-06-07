@@ -15,7 +15,7 @@ public class DiagnosisConverter {
 
   public static DiagnosisResponse toDiagnosisResponse(Diagnosis diagnosis) {
     return DiagnosisResponse.builder()
-        .disease(diagnosis.getDisease().toString())
+        .diseaseName(diagnosis.getDisease().getName())
         .createdAt(diagnosis.getCreatedAt())
         .build();
   }
