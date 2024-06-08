@@ -32,6 +32,8 @@ public class DiagnosisResponseDto {
   @NoArgsConstructor(access = AccessLevel.PROTECTED)
   @AllArgsConstructor(access = AccessLevel.PROTECTED)
   public static class GetDiagnosisResponse {
+    Long petId;
+    String petName;
     String diseaseName;
     String explanation;
     String symptom1;
@@ -39,5 +41,6 @@ public class DiagnosisResponseDto {
     String symptom3;
     String cause;
     Integer medicalExpense;
+    LocalDateTime createdAt;
   }
 }

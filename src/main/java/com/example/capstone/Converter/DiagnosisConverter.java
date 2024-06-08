@@ -50,6 +50,8 @@ public class DiagnosisConverter {
 
   public static GetDiagnosisResponse toGetDiagnosisResponse(Diagnosis diagnosis) {
     return GetDiagnosisResponse.builder()
+        .petId(diagnosis.getPet().getId())
+        .petName(diagnosis.getPet().getName())
         .diseaseName(diagnosis.getDisease().getName())
         .explanation(diagnosis.getDisease().getExplanation())
         .symptom1(diagnosis.getDisease().getSymptom1())
@@ -57,6 +59,7 @@ public class DiagnosisConverter {
         .symptom3(diagnosis.getDisease().getSymptom3())
         .cause(diagnosis.getDisease().getCauses())
         .medicalExpense(diagnosis.getMedicalExpense())
+        .createdAt(diagnosis.getCreatedAt())
         .build();
   }
 }
