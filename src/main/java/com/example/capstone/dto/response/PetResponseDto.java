@@ -14,6 +14,7 @@ public class PetResponseDto {
   @NoArgsConstructor(access = AccessLevel.PROTECTED)
   @AllArgsConstructor(access = AccessLevel.PROTECTED)
   public static class CreatePetResponse {
+    Long petId;
     String name;
     Gender gender;
     Integer age;
