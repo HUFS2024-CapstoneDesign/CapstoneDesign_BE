@@ -34,6 +34,10 @@ public class DiagnosisConverter {
         .build();
   }
 
+  public static Diagnosis toFakeDiagnosis(Disease disease, Pet pet) {
+    return Diagnosis.builder().medicalExpense(103000).disease(disease).pet(pet).build();
+  }
+
   public static CreateDiagnosisResponse toCreateDiagnosisResponse(Diagnosis diagnosis) {
     return CreateDiagnosisResponse.builder()
         .id(diagnosis.getId())

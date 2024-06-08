@@ -12,4 +12,6 @@ public interface DiagnosisCommandService {
   void deleteDiagnosis(Member member, Long diagnosisId);
 
   GetDiagnosisResponse getDiagnosis(Long diagnosisId);
+
+  Diagnosis createFakeDiagnosis(Member member, Long petId);
 }

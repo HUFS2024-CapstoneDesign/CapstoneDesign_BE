@@ -1,10 +1,13 @@
 package com.example.capstone.service.Impl;
 
+import java.util.Optional;
+
 import jakarta.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
 import com.example.capstone.Converter.DiagnosisConverter;
+import com.example.capstone.Converter.DiseaseConverter;
 import com.example.capstone.domain.Diagnosis;
 import com.example.capstone.domain.Disease;
 import com.example.capstone.domain.Pet;
@@ -59,5 +62,21 @@ public class DiagnosisCommandServiceImpl implements DiagnosisCommandService {
         diagnosisRepository
             .findById(diagnosisId)
             .orElseThrow(() -> new MemberException(GlobalErrorCode.MEMBER_NOT_FOUND)));
+  }
+
+  public Diagnosis createFakeDiagnosis(Member member, Long petId) {
+    Optional<Disease> checkDisease = diseaseRepository.findByCode("01");
+
+    if (checkDisease.isEmpty()) {
+      Disease disease = diseaseRepository.save(DiseaseConverter.toFakeDisease());
+    }
+
+    Pet pet =
+        petRepository
+            .findByIdAndMemberId(petId, member.getId())
+            .orElseThrow(() -> new MemberException(GlobalErrorCode.MEMBER_NOT_FOUND));
+
+    return diagnosisRepository.save(
+        DiagnosisConverter.toFakeDiagnosis(diseaseRepository.findByCode("01").get(), pet));
   }
 }
