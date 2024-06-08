@@ -35,6 +35,7 @@ public class PetConverter {
 
   public static PetResponse toPetResponse(Pet pet) {
     return PetResponse.builder()
+        .petId(pet.getId())
         .name(pet.getName())
         .gender(pet.getGender())
         .age(pet.getAge())
