@@ -25,6 +25,7 @@ public class PetConverter {
 
   public static CreatePetResponse toCreatePetResponse(Pet pet) {
     return CreatePetResponse.builder()
+        .petId(pet.getId())
         .name(pet.getName())
         .gender(pet.getGender())
         .age(pet.getAge())
