@@ -33,7 +33,7 @@ public class DiagnosisController {
   })
   @PostMapping("/{petId}")
   @ResponseStatus(HttpStatus.CREATED)
-  public BaseResponse<CreateDiagnosisResponse> signUpMember(
+  public BaseResponse<CreateDiagnosisResponse> createDiagnosis(
       @Parameter(hidden = true) @AuthMember Member member,
       @RequestBody CreateDiagnosisRequest request,
       @RequestParam(name = "petId") Long petId) {
@@ -60,5 +60,20 @@ public class DiagnosisController {
       @Parameter(hidden = true) @AuthMember Member member,
       @RequestParam(name = "diagnosisId") Long diagnosisId) {
     return BaseResponse.onSuccess(diagnosisCommandService.getDiagnosis(diagnosisId));
+  }
+
+  @Operation(summary = "가짜 진단 생성 API", description = "가짜 진단을 생성합니다")
+  @ApiResponses({
+    @ApiResponse(responseCode = "201", description = "성공"),
+  })
+  @PostMapping("fake/{petId}")
+  @ResponseStatus(HttpStatus.CREATED)
+  public BaseResponse<CreateDiagnosisResponse> createFakeDiagnosis(
+      @Parameter(hidden = true) @AuthMember Member member,
+      @RequestParam(name = "petId") Long petId) {
+    return BaseResponse.onSuccess(
+        GlobalErrorCode.CREATED,
+        DiagnosisConverter.toCreateDiagnosisResponse(
+            diagnosisCommandService.createFakeDiagnosis(member, petId)));
   }
 }
